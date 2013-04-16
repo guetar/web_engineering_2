@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<%@ page import="model.Game" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
     <head>
         <title xml:lang="de">Formel 0 - Spielen</title>
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
         <link rel="stylesheet" type="text/css" href="styles/screen.css" />
         <script src="js/jquery.js" type="text/javascript"></script>
+        <jsp:useBean id="game" scope="session" class="Game"/>
     </head>
     <body>
         <div id="container">
@@ -25,15 +27,15 @@
                     <div class="info">
                         <h2>Spielinformationen</h2>
                         <table summary="Diese Tabelle zeigt Informationen zum aktuellen Spiel">
-                            <tr><th id="leaderLabel" class="label">F&uuml;hrender</th><td id="leader" class="data">Super C</td></tr>
-                            <tr><th id="roundLabel" class="label">Runde</th><td id="round" class="data">1</td></tr>
-                            <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data">02:30</td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data">3</td></tr>
+                            <tr><th id="leaderLabel" class="label">F&uuml;hrender</th><td id="leader" class="data">todo</td></tr>
+                            <tr><th id="roundLabel" class="label">Runde</th><td id="round" class="data"><%=game.getRound()%></td></tr>
+                            <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data">todo</td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data">todo</td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">
-                            <tr><th id="player1NameLabel" class="label">Spieler 1</th><td id="player1Name" class="data">Super Mario</td></tr>
-                            <tr><th id="player2NameLabel" class="label">Spieler 2</th><td id="player2Name" class="data">Super C</td></tr>
+                            <tr><th id="player1NameLabel" class="label">Spieler 1</th><td id="player1Name" class="data"><%=game.getPlayer1Name()%></td></tr>
+                            <tr><th id="player2NameLabel" class="label">Spieler 2</th><td id="player2Name" class="data"><%=game.getPlayer2Name()%></td></tr>
                         </table>    	  
                     </div>
                     <div class="field">
@@ -71,7 +73,7 @@
                     <div class="player">
                         <h2 class="accessibility">W&uuml;rfelbereich</h2>
                         <span class="accessibility">An der Reihe ist</span><div id="currentPlayerName">Super Mario</div>
-                        <a id="dice" href="#" tabindex="4">
+                        <a id="dice" href="GameServlet" tabindex="4">
                             <img id="diceImage" src="img/wuerfel1.png" alt="W&uuml;rfel mit einer Eins" />	
                         </a>
                     </div>
@@ -81,33 +83,5 @@
                 &copy; 2013 Formel 0
             </div>
         </div>
-
-        <script type="text/javascript">
-            //<![CDATA[
-            
-            // call this function once before starting the animations
-            function prepareAnimation() {
-                $("#animationDone").remove();
-            }
-            
-            // call this function once after all animations have finished
-            function completeAnimation() {
-                var div = $(document.createElement('div'));
-                div.attr('id', 'animationDone');
-                div.addClass('hide');
-                $("body").append(div);
-            }
-            
-            $("#dice").click(function() {
-                prepareAnimation();
-                $("#player1").fadeOut(700, function() {
-                    $("#player1").appendTo("#start_road");
-                    $("#player1").fadeIn(700,completeAnimation);                    
-                });
-                return false;
-            });
-            //]]>
-        </script>
-
     </body>
 </html>
