@@ -29,8 +29,8 @@ public class Game {
         return round;
     }
 
-    public void setRound(int round) {
-        this.round = round;
+    public void incrementRound() {
+        round++;
     }
 
     public long getElapsedTime() {

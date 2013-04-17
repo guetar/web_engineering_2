@@ -13,7 +13,9 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("restart") == null) {
+        if (req.getParameter("restart") != null) {
+            req.getSession(false).invalidate();
+        } else {
             HttpSession session = req.getSession();
             Game game = (Game) session.getAttribute("game");
 
@@ -21,10 +23,8 @@ public class GameServlet extends HttpServlet {
                 game = new Game();
             }
 
-            game.setRound(game.getRound() + 1);
+            game.incrementRound();
             session.setAttribute("game", game);
-        } else {
-            req.getSession(false).invalidate();
         }
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/table.jsp");
