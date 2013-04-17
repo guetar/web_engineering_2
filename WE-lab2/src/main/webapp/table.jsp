@@ -1,22 +1,26 @@
+<%@ page import="model.Game" %>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
+
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<%@ page import="model.Game" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
     <head>
         <title xml:lang="de">Formel 0 - Spielen</title>
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
         <link rel="stylesheet" type="text/css" href="styles/screen.css" />
-        
+
         <jsp:useBean id="game" scope="session" class="Game"/>
         <script src="js/jquery.js" type="text/javascript"></script>
         <script type="text/javascript">
             //<![CDATA[
-            
+
             // call this function once before starting the animations
             function prepareAnimation() {
                 $("#animationDone").remove();
             }
-            
+
             // call this function once after all animations have finished
             function completeAnimation() {
                 var div = $(document.createElement('div'));
@@ -47,7 +51,10 @@
                         <table summary="Diese Tabelle zeigt Informationen zum aktuellen Spiel">
                             <tr><th id="leaderLabel" class="label">F&uuml;hrender</th><td id="leader" class="data">todo</td></tr>
                             <tr><th id="roundLabel" class="label">Runde</th><td id="round" class="data"><%=game.getRound()%></td></tr>
-                            <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data">todo</td></tr>
+                            <% Date date = new Date(game.getElapsedTime());
+                            DateFormat formatter = new SimpleDateFormat("mm:ss");
+                            String timeString = formatter.format(date); %>
+                            <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
                             <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data">todo</td></tr>
                         </table>  
                         <h2>Spieler</h2>
