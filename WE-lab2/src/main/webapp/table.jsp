@@ -37,7 +37,7 @@
                 <div id="navigation">
                     <h2 class="accessibility">Navigation</h2>
                     <ul title="Navigation">
-                        <li><a id="startNewGame" href="#" tabindex="1">Neues Spiel</a></li>
+                        <li><a id="startNewGame" href="GameServlet?restart=true" tabindex="1">Neues Spiel</a></li>
                         <li><a href="#" tabindex="2">Ausloggen</a></li>
                     </ul>
                 </div>

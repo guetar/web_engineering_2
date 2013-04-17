@@ -1,10 +1,7 @@
 package controller;
 
-
 import model.Game;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,16 +13,20 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        Game game = (Game) session.getAttribute("game");
-        
-        if (game == null) {
-            game = new Game();
+        if (req.getParameter("restart") == null) {
+            HttpSession session = req.getSession();
+            Game game = (Game) session.getAttribute("game");
+
+            if (game == null) {
+                game = new Game();
+            }
+
+            game.setRound(game.getRound() + 1);
+            session.setAttribute("game", game);
+        } else {
+            req.getSession(false).invalidate();
         }
-        
-        game.setRound(game.getRound() + 1);
-        session.setAttribute("game", game);
-        
+
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/table.jsp");
         dispatcher.forward(req, resp);
     }
