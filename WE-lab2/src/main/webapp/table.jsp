@@ -6,8 +6,26 @@
         <title xml:lang="de">Formel 0 - Spielen</title>
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
         <link rel="stylesheet" type="text/css" href="styles/screen.css" />
-        <script src="js/jquery.js" type="text/javascript"></script>
+        
         <jsp:useBean id="game" scope="session" class="Game"/>
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            //<![CDATA[
+            
+            // call this function once before starting the animations
+            function prepareAnimation() {
+                $("#animationDone").remove();
+            }
+            
+            // call this function once after all animations have finished
+            function completeAnimation() {
+                var div = $(document.createElement('div'));
+                div.attr('id', 'animationDone');
+                div.addClass('hide');
+                $("body").append(div);
+            }
+            //]]>
+        </script>
     </head>
     <body>
         <div id="container">
