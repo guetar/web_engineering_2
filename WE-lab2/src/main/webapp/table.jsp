@@ -23,20 +23,70 @@
             
             $(document).ready(function() {
                 prepareAnimation();
-                
-                if(<%=game.getRound()%> > 0) {
-                $("#player1").fadeOut(700, function() {
-                    $("#player1").appendTo(document.getElementById("road_<%=game.getPositionP1()%>"));
-                    $("#player1").fadeIn(700,completeAnimation);
-                });
-                
-                }
-                
-                
-                
+                 
+                drawPlayer1NoOil();
+               
                 return false;
             });
             
+            
+            function drawPlayer1NoOil () {
+                if(<%=game.getRound()%> > 0) {
+                    
+                    //Animation Player 1
+                    $("#player1").fadeOut(700, function() {
+                        $("#player1").appendTo(document.getElementById("road_<%=game.getPositionP1()%>"));
+                        $("#player1").fadeIn(700,drawPlayer1Oil);
+                    });
+                }
+            }
+            
+            function drawPlayer1Oil () {
+                if(<%=game.getRound()%> > 0) {
+                    if( <%=game.isOilField(game.getPositionP1()) %> == 1) {
+                    //Zurücksetzen auf den Start des Players 1
+                    <% if(game.isOilField(game.getPositionP1()) == 1) { game.setPositionP1(0); }  %>
+                    $("#player1").fadeOut(700, function() {
+                        $("#player1").appendTo(document.getElementById("start_road"));
+                        $("#player1").fadeIn(700,drawPlayer2NoOil);
+                    });
+                    
+                    } else {
+                        drawPlayer2NoOil();
+                    }
+                }
+            }
+            
+            function drawPlayer2NoOil () {
+                if(<%=game.getRound()%> > 0) {
+                    
+                    //Animation Player 2
+                    $("#player2").fadeOut(700, function() {
+                        $("#player2").appendTo(document.getElementById("road_<%=game.getPositionP2()%>"));
+                        $("#player2").fadeIn(700,drawPlayer2Oil);
+                    });
+                }
+            }
+            
+            function drawPlayer2Oil () {
+                if(<%=game.getRound()%> > 0) {
+                    
+                    if( <%=game.isOilField(game.getPositionP2()) %> == 1) {
+              
+                    //Zurücksetzen auf den Start des Players 2
+                    <% if(game.isOilField(game.getPositionP2()) == 1) { game.setPositionP2(0); }  %>
+       
+                    $("#player2").fadeOut(700, function() {
+                        $("#player2").appendTo(document.getElementById("start_road"));
+                        $("#player2").fadeIn(700,completeAnimation);
+                    });
+                    } else {
+                        completeAnimation;
+                    }
+                    
+                    
+                }
+            }
 
             // call this function once after all animations have finished
             function completeAnimation() {
@@ -72,7 +122,7 @@
                             DateFormat formatter = new SimpleDateFormat("mm:ss");
                             String timeString = formatter.format(date); %>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data">todo</td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getDicep1()%> <%=game.getPositionP1()%> <%=game.getDicep2()%> <%=game.getPositionP2()%></td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">

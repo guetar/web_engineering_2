@@ -1,7 +1,5 @@
 package model;
 
-import java.util.*;
-
 public class Game {
 
     private String player1Name;
@@ -11,9 +9,9 @@ public class Game {
     private int dicep1;
     private int dicep2;
     private int leader;
-    private int posP1;
-    private int posP2;
-    private boolean[] isOilArray;
+    private int posP1, oldPosP1;
+    private int posP2, oldPosP2;
+    private int[] isOilArray;
 
     public Game() {
         player1Name = "Super Mario";
@@ -23,9 +21,9 @@ public class Game {
         posP2=0;
         
         startTime = System.currentTimeMillis();
-        isOilArray = new boolean[7];
-        isOilArray[0] = isOilArray[1] = isOilArray[3] = isOilArray[4] = isOilArray[6] = false;
-        isOilArray[5] = isOilArray[2] = true;
+        isOilArray = new int[7];
+        isOilArray[0] = isOilArray[1] = isOilArray[3] = isOilArray[4] = isOilArray[6] = 0;
+        isOilArray[5] = isOilArray[2] = 1;
     }
 
     public String getPlayer1Name() {
@@ -74,26 +72,36 @@ public class Game {
         this.leader = leader;
     }
     
+    public int getOldPositionP1() {
+        return oldPosP1;
+    }
+    
     public int getPositionP1() {
         return posP1;
     }
     
     public void setPositionP1(int newPosition) {
+        oldPosP1 = posP1;
         posP1 = newPosition;
     }
     
+    public int getOldPositionP2() {
+        return oldPosP2;
+    }
+    
     public int getPositionP2() {
-        return posP1;
+        return posP2;
     }
     
     public void setPositionP2(int newPosition) {
-        posP2 =newPosition;
+        oldPosP2 = posP2;
+        posP2 = newPosition;
     }
     
-    public boolean isOilField(int position) {
+    public int isOilField(int position) {
         if(position < isOilArray.length) {
             return isOilArray[position];
         }
-        return false;
+        return 0;
     }
 }
