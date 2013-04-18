@@ -11,7 +11,7 @@
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
         <link rel="stylesheet" type="text/css" href="styles/screen.css" />
 
-        <jsp:useBean id="game" scope="session" class="Game"/>
+        <jsp:useBean id="game" scope="session" class="model.Game"/>
         <script src="js/jquery.js" type="text/javascript"></script>
         <script type="text/javascript">
             //<![CDATA[
@@ -20,6 +20,23 @@
             function prepareAnimation() {
                 $("#animationDone").remove();
             }
+            
+            $(document).ready(function() {
+                prepareAnimation();
+                
+                if(<%=game.getRound()%> > 0) {
+                $("#player1").fadeOut(700, function() {
+                    $("#player1").appendTo(document.getElementById("road_<%=game.getPositionP1()%>"));
+                    $("#player1").fadeIn(700,completeAnimation);
+                });
+                
+                }
+                
+                
+                
+                return false;
+            });
+            
 
             // call this function once after all animations have finished
             function completeAnimation() {
@@ -68,24 +85,26 @@
                         <ol id="road">
                             <li id="start_road">
                                 <span class="accessibility">Startfeld</span>
+                                <span id="player1">
+                                    <span class="accessibility"><em>Spieler 1</em></span>
+                                </span>
+                                <span id="player2">
+                                    <span class="accessibility"><em>Spieler 2</em></span>
+                                </span>
                             </li>
                             <li class="empty_road" id="road_1">
                                 <span class="accessibility">Feld 2</span>
                             </li>
                             <li class="oil_road" id="road_2">
                                 <span class="accessibility">Feld 3</span>
-                                <span id="player1">
-                                    <span class="accessibility"><em>Spieler 1</em></span>
-                                </span>
+                                
                             </li>
                             <li class="empty_road" id="road_3">
                                 <span class="accessibility">Feld 4</span>
                             </li>
                             <li class="empty_road" id="road_4">
                                 <span class="accessibility">Feld 5</span>
-                                <span id="player2">
-                                    <span class="accessibility"><em>Spieler 2</em></span>
-                                </span>
+                                
                             </li>
                             <li class="oil_road" id="road_5">
                                 <span class="accessibility">Feld 6</span>
@@ -98,8 +117,8 @@
                     <div class="player">
                         <h2 class="accessibility">W&uuml;rfelbereich</h2>
                         <span class="accessibility">An der Reihe ist</span><div id="currentPlayerName">Super Mario</div>
-                        <a id="dice" href="GameServlet" tabindex="4">
-                            <img id="diceImage" src="img/wuerfel1.png" alt="W&uuml;rfel mit einer Eins" />	
+                        <a id="dice" href="GameServlet?dice=true" tabindex="4">
+                            <img id="diceImage" src="img/wuerfel<%=game.getDicep1()%>.png" alt="W&uuml;rfel mit einer Eins" />	
                         </a>
                     </div>
                 </div>
