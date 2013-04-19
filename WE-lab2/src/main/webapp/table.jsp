@@ -21,12 +21,71 @@
                 $("#animationDone").remove();
             }
             
-            function getOil() {
-                return 
+            $(document).ready(function() {
+                prepareAnimation();
+                 
+                drawPlayer1NoOil();
+               
+                return false;
+            });
+            
+            
+            function drawPlayer1NoOil () {
+                if(<%=game.getRound()%> > 0) {
+                    
+                    //Animation Player 1
+                    $("#player1").fadeOut(700, function() {
+                        $("#player1").appendTo(document.getElementById("road_<%=game.getPositionP1()%>"));
+                        $("#player1").fadeIn(700,drawPlayer1Oil);
+                    });
+                }
             }
             
-            function animate(oil) {
-                
+            function drawPlayer1Oil () {
+                if(<%=game.getRound()%> > 0) {
+                    if( <%=game.isOilField(game.getPositionP1()) %> == 1) {
+                    //Zurücksetzen auf den Start des Players 1
+                    <% if(game.isOilField(game.getPositionP1()) == 1) { game.setPositionP1(0); }  %>
+                    $("#player1").fadeOut(700, function() {
+                        $("#player1").appendTo(document.getElementById("start_road"));
+                        $("#player1").fadeIn(700,drawPlayer2NoOil);
+                    });
+                    
+                    } else {
+                        drawPlayer2NoOil();
+                    }
+                }
+            }
+            
+            function drawPlayer2NoOil () {
+                if(<%=game.getRound()%> > 0) {
+                    
+                    //Animation Player 2
+                    $("#player2").fadeOut(700, function() {
+                        $("#player2").appendTo(document.getElementById("road_<%=game.getPositionP2()%>"));
+                        $("#player2").fadeIn(700,drawPlayer2Oil);
+                    });
+                }
+            }
+            
+            function drawPlayer2Oil () {
+                if(<%=game.getRound()%> > 0) {
+                    
+                    if( <%=game.isOilField(game.getPositionP2()) %> == 1) {
+              
+                    //Zurücksetzen auf den Start des Players 2
+                    <% if(game.isOilField(game.getPositionP2()) == 1) { game.setPositionP2(0); }  %>
+       
+                    $("#player2").fadeOut(700, function() {
+                        $("#player2").appendTo(document.getElementById("start_road"));
+                        $("#player2").fadeIn(700,completeAnimation);
+                    });
+                    } else {
+                        completeAnimation;
+                    }
+                    
+                    
+                }
             }
 
             // call this function once after all animations have finished
@@ -63,7 +122,7 @@
                             DateFormat formatter = new SimpleDateFormat("mm:ss");
                             String timeString = formatter.format(date); %>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data">todo</td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getDicep1()%> <%=game.getPositionP1()%> <%=game.getDicep2()%> <%=game.getPositionP2()%></td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">
@@ -76,24 +135,26 @@
                         <ol id="road">
                             <li id="start_road">
                                 <span class="accessibility">Startfeld</span>
+                                <span id="player1">
+                                    <span class="accessibility"><em>Spieler 1</em></span>
+                                </span>
+                                <span id="player2">
+                                    <span class="accessibility"><em>Spieler 2</em></span>
+                                </span>
                             </li>
                             <li class="empty_road" id="road_1">
                                 <span class="accessibility">Feld 2</span>
                             </li>
                             <li class="oil_road" id="road_2">
                                 <span class="accessibility">Feld 3</span>
-                                <span id="player1">
-                                    <span class="accessibility"><em>Spieler 1</em></span>
-                                </span>
+                                
                             </li>
                             <li class="empty_road" id="road_3">
                                 <span class="accessibility">Feld 4</span>
                             </li>
                             <li class="empty_road" id="road_4">
                                 <span class="accessibility">Feld 5</span>
-                                <span id="player2">
-                                    <span class="accessibility"><em>Spieler 2</em></span>
-                                </span>
+                                
                             </li>
                             <li class="oil_road" id="road_5">
                                 <span class="accessibility">Feld 6</span>
@@ -106,8 +167,8 @@
                     <div class="player">
                         <h2 class="accessibility">W&uuml;rfelbereich</h2>
                         <span class="accessibility">An der Reihe ist</span><div id="currentPlayerName">Super Mario</div>
-                        <a id="dice" href="GameServlet" tabindex="4">
-                            <img id="diceImage" src="img/wuerfel1.png" alt="W&uuml;rfel mit einer Eins" />	
+                        <a id="dice" href="GameServlet?dice=true" tabindex="4">
+                            <img id="diceImage" src="img/wuerfel<%=game.getDicep1()%>.png" alt="W&uuml;rfel mit einer Eins" />	
                         </a>
                     </div>
                 </div>
