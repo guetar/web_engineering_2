@@ -16,6 +16,10 @@ public class Game {
         round = 1;
         startTime = System.currentTimeMillis();
     }
+    
+    public void getOil() {
+        
+    }
 
     public String getPlayer1Name() {
         return player1Name;

@@ -1,4 +1,4 @@
-<%@ page import="model.Game" %>
+<%@page import="model.Game" %>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
@@ -11,7 +11,7 @@
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
         <link rel="stylesheet" type="text/css" href="styles/screen.css" />
 
-        <jsp:useBean id="game" scope="session" class="Game"/>
+        <jsp:useBean id="game" scope="session" class="model.Game"/>
         <script src="js/jquery.js" type="text/javascript"></script>
         <script type="text/javascript">
             //<![CDATA[
@@ -19,6 +19,14 @@
             // call this function once before starting the animations
             function prepareAnimation() {
                 $("#animationDone").remove();
+            }
+            
+            function getOil() {
+                return 
+            }
+            
+            function animate(oil) {
+                
             }
 
             // call this function once after all animations have finished
