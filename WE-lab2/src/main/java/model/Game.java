@@ -2,28 +2,39 @@ package model;
 
 public class Game {
 
-    private String player1Name;
-    private String player2Name;
+    private String nameP1;
+    private String nameP2;
+    private String leader;
     private int round;
     private long startTime;
-    private int dicep1;
-    private int dicep2;
-    private int leader;
+    private int diceP1;
+    private int diceP2;
     private int posP1, oldPosP1;
     private int posP2, oldPosP2;
-    private int[] isOilArray;
+    private boolean[] isOilArray;
+    private boolean over;
 
     public Game() {
-        player1Name = "Super Mario";
-        player2Name = "Super C";
-        round = 0;
-        posP1=0;
-        posP2=0;
-        
         startTime = System.currentTimeMillis();
-        isOilArray = new int[7];
-        isOilArray[0] = isOilArray[1] = isOilArray[3] = isOilArray[4] = isOilArray[6] = 0;
-        isOilArray[5] = isOilArray[2] = 1;
+        nameP1 = "Super Mario";
+        nameP2 = "Super C";
+        round = 0;
+        
+        oldPosP1 = 0;
+        oldPosP2 = 0;
+        posP1 = 0;
+        posP2 = 0;
+        
+        isOilArray = new boolean[7];
+        isOilArray[0] = false;
+        isOilArray[1] = false;
+        isOilArray[2] = true;
+        isOilArray[3] = false;
+        isOilArray[4] = false;
+        isOilArray[5] = true;
+        isOilArray[6] = false;
+        
+        over = false;
     }
     
     public void getOil() {
@@ -31,11 +42,11 @@ public class Game {
     }
 
     public String getPlayer1Name() {
-        return player1Name;
+        return nameP1;
     }
 
     public String getPlayer2Name() {
-        return player2Name;
+        return nameP2;
     }
 
     public int getRound() {
@@ -50,30 +61,26 @@ public class Game {
         return System.currentTimeMillis() - startTime;
     }
 
-    public int getDicep1() {
-        return dicep1;
+    public int getDiceP1() {
+        return diceP1;
     }
 
-    public void setDicep1(int dicep1) {
-        this.dicep1 = dicep1;
-        this.setPositionP1(this.posP1+dicep1);
+    public void setDiceP1(int diceP1) {
+        this.diceP1 = diceP1;
+        this.setPositionP1(this.posP1 + diceP1);
     }
 
-    public int getDicep2() {
-        return dicep2;
+    public int getDiceP2() {
+        return diceP2;
     }
 
-    public void setDicep2(int dicep2) {
-        this.dicep2 = dicep2;
-        this.setPositionP2(this.posP2+dicep2);
+    public void setDiceP2(int diceP2) {
+        this.diceP2 = diceP2;
+        this.setPositionP2(this.posP2 + diceP2);
     }
 
-    public int getLeader() {
-        return leader;
-    }
-
-    public void setLeader(int leader) {
-        this.leader = leader;
+    public String getLeader() {
+        return (posP1 >= posP2) ? nameP1 : nameP2;
     }
     
     public int getOldPositionP1() {
@@ -87,6 +94,11 @@ public class Game {
     public void setPositionP1(int newPosition) {
         oldPosP1 = posP1;
         posP1 = newPosition;
+        if(newPosition >= isOilArray.length - 1) over = true;
+    }
+    
+    public void resetPositionP1() {
+        oldPosP1 = posP1 = 0;
     }
     
     public int getOldPositionP2() {
@@ -100,12 +112,21 @@ public class Game {
     public void setPositionP2(int newPosition) {
         oldPosP2 = posP2;
         posP2 = newPosition;
+        if(newPosition >= isOilArray.length - 1) over = true;
     }
     
-    public int isOilField(int position) {
-        if(position < isOilArray.length) {
+    public void resetPositionP2() {
+        oldPosP2 = posP2 = 0;
+    }
+    
+    public boolean isOilField(int position) {
+        if(position < isOilArray.length - 1) {
             return isOilArray[position];
         }
-        return 0;
+        return false;
+    }
+    
+    public boolean isOver() {
+        return over;
     }
 }

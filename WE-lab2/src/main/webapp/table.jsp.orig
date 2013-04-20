@@ -21,67 +21,80 @@
                 $("#animationDone").remove();
             }
             
+<<<<<<< HEAD
+            function getOil() {
+                return 
+            }
+            
+            function animate(oil) {
+                
+=======
             $(document).ready(function() {
                 prepareAnimation();
-                
-                if(<%=game.isOver()%>) {
-                    alert("GAME OVER! Player " + <%game.getLeader();%> + " won!");
-                    return false;
-                }
-                
-                if(<%=game.getRound()%> > 0) {
-                    $("#player1").appendTo(document.getElementById("road_<%=game.getOldPositionP1()%>"));
-                    $("#player2").appendTo(document.getElementById("road_<%=game.getOldPositionP2()%>"));
-                    drawPlayer1NoOil();
-                }
+                 
+                drawPlayer1NoOil();
+               
                 return false;
             });
             
             
             function drawPlayer1NoOil () {
+                if(<%=game.getRound()%> > 0) {
                     
-                //Animation Player 1
-                $("#player1").fadeOut(700, function() {
-                    $("#player1").appendTo(document.getElementById("road_<%=game.getPositionP1()%>"));
-                    $("#player1").fadeIn(700, drawPlayer1Oil);
-                });
+                    //Animation Player 1
+                    $("#player1").fadeOut(700, function() {
+                        $("#player1").appendTo(document.getElementById("road_<%=game.getPositionP1()%>"));
+                        $("#player1").fadeIn(700,drawPlayer1Oil);
+                    });
+                }
             }
             
             function drawPlayer1Oil () {
-                if(<%=game.isOilField(game.getPositionP1())%>) {
+                if(<%=game.getRound()%> > 0) {
+                    if( <%=game.isOilField(game.getPositionP1()) %> == 1) {
                     //Zurücksetzen auf den Start des Players 1
-                   <%game.resetPositionP1();%>
+                    <% if(game.isOilField(game.getPositionP1()) == 1) { game.setPositionP1(0); }  %>
                     $("#player1").fadeOut(700, function() {
                         $("#player1").appendTo(document.getElementById("start_road"));
-                        $("#player1").fadeIn(700, drawPlayer2NoOil);
+                        $("#player1").fadeIn(700,drawPlayer2NoOil);
                     });
-
-                } else {
-                    drawPlayer2NoOil();
+                    
+                    } else {
+                        drawPlayer2NoOil();
+                    }
                 }
             }
             
             function drawPlayer2NoOil () {
+                if(<%=game.getRound()%> > 0) {
                     
-                //Animation Player 2
-                $("#player2").fadeOut(700, function() {
-                    $("#player2").appendTo(document.getElementById("road_<%=game.getPositionP2()%>"));
-                    $("#player2").fadeIn(700, drawPlayer2Oil);
-                });
+                    //Animation Player 2
+                    $("#player2").fadeOut(700, function() {
+                        $("#player2").appendTo(document.getElementById("road_<%=game.getPositionP2()%>"));
+                        $("#player2").fadeIn(700,drawPlayer2Oil);
+                    });
+                }
             }
             
             function drawPlayer2Oil () {
-                if(<%=game.isOilField(game.getPositionP2())%>) {
+                if(<%=game.getRound()%> > 0) {
+                    
+                    if( <%=game.isOilField(game.getPositionP2()) %> == 1) {
+              
                     //Zurücksetzen auf den Start des Players 2
-                   <%game.resetPositionP2();%>
+                    <% if(game.isOilField(game.getPositionP2()) == 1) { game.setPositionP2(0); }  %>
+       
                     $("#player2").fadeOut(700, function() {
                         $("#player2").appendTo(document.getElementById("start_road"));
-                        $("#player2").fadeIn(700, completeAnimation);
+                        $("#player2").fadeIn(700,completeAnimation);
                     });
+                    } else {
+                        completeAnimation;
+                    }
                     
-                } else {
-                    completeAnimation;
+                    
                 }
+>>>>>>> f78437a05a5f665d89beed29154f7128d8e0b291
             }
 
             // call this function once after all animations have finished
@@ -112,13 +125,13 @@
                     <div class="info">
                         <h2>Spielinformationen</h2>
                         <table summary="Diese Tabelle zeigt Informationen zum aktuellen Spiel">
-                            <tr><th id="leaderLabel" class="label">F&uuml;hrender</th><td id="leader" class="data"><%=game.getLeader()%></td></tr>
+                            <tr><th id="leaderLabel" class="label">F&uuml;hrender</th><td id="leader" class="data">todo</td></tr>
                             <tr><th id="roundLabel" class="label">Runde</th><td id="round" class="data"><%=game.getRound()%></td></tr>
                             <% Date date = new Date(game.getElapsedTime());
                             DateFormat formatter = new SimpleDateFormat("mm:ss");
                             String timeString = formatter.format(date); %>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getDiceP1()%> <%=game.getPositionP1()%> <%=game.getDiceP2()%> <%=game.getPositionP2()%></td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getDicep1()%> <%=game.getPositionP1()%> <%=game.getDicep2()%> <%=game.getPositionP2()%></td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">
@@ -164,7 +177,7 @@
                         <h2 class="accessibility">W&uuml;rfelbereich</h2>
                         <span class="accessibility">An der Reihe ist</span><div id="currentPlayerName">Super Mario</div>
                         <a id="dice" href="GameServlet?dice=true" tabindex="4">
-                            <img id="diceImage" src="img/wuerfel<%=game.getDiceP1()%>.png" alt="W&uuml;rfel mit einer Eins" />	
+                            <img id="diceImage" src="img/wuerfel<%=game.getDicep1()%>.png" alt="W&uuml;rfel mit einer Eins" />	
                         </a>
                     </div>
                 </div>

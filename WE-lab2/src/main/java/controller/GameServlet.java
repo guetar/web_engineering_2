@@ -15,29 +15,19 @@ public class GameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("restart") != null) {
             req.getSession(false).invalidate();
-        } if (req.getParameter("dice") != null) {
-            HttpSession session = req.getSession();
-            Game game = (Game) session.getAttribute("game");
-
-            if (game == null) {
-                game = new Game();
-            }
-            game.incrementRound();
-            game.setDicep1((int)Math.floor(Math.random()*3)+1);
-            game.setDicep2((int)Math.floor(Math.random()*3)+1);
-            session.setAttribute("game", game);
-            
-        } else {
-            HttpSession session = req.getSession();
-            Game game = (Game) session.getAttribute("game");
-
-            if (game == null) {
-                game = new Game();
-            }
-
-            game.incrementRound();
-            session.setAttribute("game", game);
         }
+            
+        HttpSession session = req.getSession();
+        Game game = (Game) session.getAttribute("game");
+        game = (game == null) ? new Game() : game;
+        game.incrementRound();
+        
+        if (req.getParameter("dice") != null) {
+            game.setDiceP1((int)Math.floor(Math.random() * 3) + 1);
+            game.setDiceP2((int)Math.floor(Math.random() * 3) + 1);
+        }
+        
+        session.setAttribute("game", game);
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/table.jsp");
         dispatcher.forward(req, resp);
