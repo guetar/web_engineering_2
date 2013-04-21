@@ -12,6 +12,10 @@ public class Player {
     private int oldPos;
     private int curPos;
     
+    public Player() {
+        
+    }
+    
     public Player(String name) {
         this.name = name;
         this.oldPos = this.curPos = 0;

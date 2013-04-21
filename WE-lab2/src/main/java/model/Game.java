@@ -10,6 +10,10 @@ public class Game {
     private long startTime;
     private boolean[] oil;
 
+    public Game() {
+        
+    }
+    
     public Game(Player p1, Player p2) {
         startTime = System.currentTimeMillis();
         round = 0;
