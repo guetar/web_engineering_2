@@ -53,7 +53,7 @@ public class Game {
     }
 
     
-    public String getLeader() {
+    public String getLeaderName() {
         if(leader == 1) {
             return p1.getName();
         } else if(leader == 2) {
@@ -61,6 +61,10 @@ public class Game {
         } else {
             return "";
         }
+    }
+    
+    public int getLeader() {
+        return leader;
     }
     
     public void setLeader(int leader) {

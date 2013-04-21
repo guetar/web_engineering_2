@@ -25,12 +25,10 @@
             $(document).ready(function() {
                 prepareAnimation();
 
-                if (<%= !game.isOver ()%>) {
-                    if (<%=game.getRound()%> > 0) {
-                        $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getOldPos()%>"));
-                        $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getOldPos()%>"));
-                        drawPlayer1NoOil();
-                    }
+                if (<%=game.getRound()%> > 0) {
+                    $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getOldPos()%>"));
+                    $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getOldPos()%>"));
+                    drawPlayer1NoOil();
                 }
 
                 completeAnimation();
@@ -110,11 +108,12 @@
                     <div class="info">
                         <h2>Spielinformationen</h2>
                         <table summary="Diese Tabelle zeigt Informationen zum aktuellen Spiel">
-                            <tr><th id="leaderLabel" class="label">F&uuml;hrender</th><td id="leader" class="data"><%=game.getLeader()%></td></tr>
+                            <% String leaderName = game.getLeaderName().isEmpty() ? "mehrere" : game.getLeaderName();%>
+                            <tr><th id="leaderLabel" class="label">F&uuml;hrender</th><td id="leader" class="data"><%=leaderName%></td></tr>
                             <tr><th id="roundLabel" class="label">Runde</th><td id="round" class="data"><%=game.getRound()%></td></tr>
                                     <% Date date = new Date(game.getElapsedTime());
-                                DateFormat formatter = new SimpleDateFormat("mm:ss");
-                                String timeString = formatter.format(date);%>
+                                        DateFormat formatter = new SimpleDateFormat("mm:ss");
+                                        String timeString = formatter.format(date);%>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
                             <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP1().getDice()%> <%=game.getP1().getCurPos()%> <%=game.getP2().getDice()%> <%=game.getP2().getCurPos()%> GO: <%=game.isOver()%></td></tr>
                         </table>  
