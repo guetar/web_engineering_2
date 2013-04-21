@@ -12,15 +12,15 @@ public class Player {
     private int oldPos;
     private int curPos;
     
-    public Player() {
-        
+    public Player(String name, Track track) {
+        this.name = name;
+        this.track = track;
     }
     
-    public Player(String name) {
+    public void setName(String name) {
         this.name = name;
-        this.oldPos = this.curPos = 0;
-        
     }
+    
     public String getName() {
         return name;
     }
@@ -31,7 +31,6 @@ public class Player {
 
     public void setDice(int dice) {
         this.dice = dice;
-        this.setPos(this.curPos + dice);
     }
     
     public int getDice() {
@@ -40,11 +39,7 @@ public class Player {
     
     public void setPos(int newPos) {
         oldPos = curPos;
-        curPos = (newPos < track.getLength()) ? newPos : track.getLength();
-    }
-    
-    public void resetPos() {
-        oldPos = curPos = 0;
+        curPos = newPos;
     }
     
     public int getOldPos() {

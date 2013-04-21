@@ -5,31 +5,45 @@ public class Game {
     private Player p1;
     private Player p2;
     private Track track;
-    private String leader;
+    private int leader;
+    private boolean gameOver;
     private int round;
     private long startTime;
-    private boolean[] oil;
 
     public Game() {
+        startTime = System.currentTimeMillis();
+        track = new Track();
         
+        p1 = new Player("Super Mario", track);
+        p2 = new Player("Super C", track);
     }
     
-    public Game(Player p1, Player p2) {
-        startTime = System.currentTimeMillis();
-        round = 0;
-        
+    public Track getTrack() {
+        return track;
+    }
+    
+    public Player getP1() {
+        return p1;
+    }
+
+    public Player getP2() {
+        return p2;
+    }
+
+    public void setP1(Player p1) {
         this.p1 = p1;
-        this.p2 = p2;
-        
-        this.track = new Track();
         p1.setTrack(track);
+    }
+
+    public void setP2(Player p2) {
+        this.p2 = p2;
         p2.setTrack(track);
     }
 
     public void incrementRound() {
         round++;
     }
-    
+
     public int getRound() {
         return round;
     }
@@ -38,18 +52,34 @@ public class Game {
         return System.currentTimeMillis() - startTime;
     }
 
+    
     public String getLeader() {
-        return (p1.getCurPos() > p2.getCurPos()) ? p1.getName() : p2.getName();
+        if(leader == 1) {
+            return p1.getName();
+        } else if(leader == 2) {
+            return p2.getName();
+        } else {
+            return "";
+        }
+    }
+    
+    public void setLeader(int leader) {
+        this.leader = leader;
     }
     
     public boolean isOilField(int position) {
-        if(position < oil.length - 1) {
-            return oil[position];
+        if (position < track.getLength() - 1) {
+            return track.getOil(position);
         }
+        
         return false;
     }
-    
+
     public boolean isOver() {
-        return (p1.getCurPos() == track.getLength() || p2.getCurPos() == track.getLength());
+        return gameOver;
+    }
+    
+    public void setOver() {
+        gameOver = true;
     }
 }

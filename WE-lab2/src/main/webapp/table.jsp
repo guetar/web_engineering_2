@@ -1,5 +1,4 @@
 <%@page import="model.Game"%>
-<%@page import="model.Player"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
@@ -13,8 +12,6 @@
         <link rel="stylesheet" type="text/css" href="styles/screen.css" />
 
         <jsp:useBean id='game' class="model.Game" scope="session"/>
-        <jsp:useBean id='p1' class="model.Player" scope="session"/>
-        <jsp:useBean id='p2' class="model.Player" scope="session"/>
         
         <script src="js/jquery.js" type="text/javascript"></script>
         <script type="text/javascript">
@@ -28,16 +25,13 @@
             $(document).ready(function() {
                 prepareAnimation();
                 
-                if(<%=game.isOver()%>) {
-                    alert("GAME OVER! Player " + <%game.getLeader();%> + " won!");
-                    return false;
-                }
-                
                 if(<%=game.getRound()%> > 0) {
-                    $("#player1").appendTo(document.getElementById("road_<%=p1.getOldPos()%>"));
-                    $("#player2").appendTo(document.getElementById("road_<%=p2.getOldPos()%>"));
+                    $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getOldPos()%>"));
+                    $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getOldPos()%>"));
                     drawPlayer1NoOil();
                 }
+                
+                completeAnimation();
                 return false;
             });
             
@@ -46,15 +40,14 @@
                     
                 //Animation Player 1
                 $("#player1").fadeOut(700, function() {
-                    $("#player1").appendTo(document.getElementById("road_<%=p1.getCurPos()%>"));
+                    $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getCurPos()%>"));
                     $("#player1").fadeIn(700, drawPlayer1Oil);
                 });
             }
             
             function drawPlayer1Oil () {
-                if(<%=game.isOilField(p1.getCurPos())%>) {
+                if(<%=game.isOilField(game.getP1().getCurPos())%>) {
                     //Zurücksetzen auf den Start des Players 1
-                   <%p1.resetPos();%>
                     $("#player1").fadeOut(700, function() {
                         $("#player1").appendTo(document.getElementById("start_road"));
                         $("#player1").fadeIn(700, drawPlayer2NoOil);
@@ -69,15 +62,14 @@
                     
                 //Animation Player 2
                 $("#player2").fadeOut(700, function() {
-                    $("#player2").appendTo(document.getElementById("road_<%=p2.getCurPos()%>"));
+                    $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getCurPos()%>"));
                     $("#player2").fadeIn(700, drawPlayer2Oil);
                 });
             }
             
             function drawPlayer2Oil () {
-                if(<%=game.isOilField(p2.getCurPos())%>) {
+                if(<%=game.isOilField(game.getP2().getCurPos())%>) {
                     //Zurücksetzen auf den Start des Players 2
-                   <%p2.resetPos();%>
                     $("#player2").fadeOut(700, function() {
                         $("#player2").appendTo(document.getElementById("start_road"));
                         $("#player2").fadeIn(700, completeAnimation);
@@ -122,12 +114,12 @@
                             DateFormat formatter = new SimpleDateFormat("mm:ss");
                             String timeString = formatter.format(date); %>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=p1.getDice()%> <%=p1.getCurPos()%> <%=p2.getDice()%> <%=p2.getDice()%></td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP1().getDice()%> <%=game.getP1().getCurPos()%> <%=game.getP2().getDice()%> <%=game.getP2().getDice()%></td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">
-                            <tr><th id="player1NameLabel" class="label">Spieler 1</th><td id="player1Name" class="data"><%=p1.getName()%></td></tr>
-                            <tr><th id="player2NameLabel" class="label">Spieler 2</th><td id="player2Name" class="data"><%=p2.getName()%></td></tr>
+                            <tr><th id="player1NameLabel" class="label">Spieler 1</th><td id="player1Name" class="data"><%=game.getP1().getName()%></td></tr>
+                            <tr><th id="player2NameLabel" class="label">Spieler 2</th><td id="player2Name" class="data"><%=game.getP2().getName()%></td></tr>
                         </table>    	  
                     </div>
                     <div class="field">
@@ -168,7 +160,7 @@
                         <h2 class="accessibility">W&uuml;rfelbereich</h2>
                         <span class="accessibility">An der Reihe ist</span><div id="currentPlayerName">Super Mario</div>
                         <a id="dice" href="GameServlet?dice=true" tabindex="4">
-                            <img id="diceImage" src="img/wuerfel<%=p1.getDice()%>.png" alt="W&uuml;rfel mit einer Eins" />	
+                            <img id="diceImage" src="img/wuerfel<%=game.getP1().getDice()%>.png" alt="W&uuml;rfel mit einer Eins" />	
                         </a>
                     </div>
                 </div>

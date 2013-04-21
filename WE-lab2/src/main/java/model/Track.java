@@ -7,7 +7,7 @@ package model;
 public class Track {
 
     private boolean[] track;
-    
+
     public Track() {
         track = new boolean[7];
         track[0] = false;
@@ -18,7 +18,11 @@ public class Track {
         track[5] = true;
         track[6] = false;
     }
-    
+
+    public boolean getOil(int position) {
+        return track[position];
+    }
+
     public int getLength() {
         return track.length - 1;
     }
