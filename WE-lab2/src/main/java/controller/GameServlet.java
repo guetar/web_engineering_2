@@ -24,32 +24,54 @@ public class GameServlet extends HttpServlet {
             if (game == null) {
                 game = new Game();
             }
-            
-            update(game);
 
-            session.setAttribute("game", game);
+            if (!game.isOver()) {
+                update(game);
+                session.setAttribute("game", game);
+            }
         }
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/table.jsp");
         dispatcher.forward(req, resp);
     }
-    
+
     public static void update(Game game) {
         Player p1 = game.getP1();
         Player p2 = game.getP2();
         Track track = game.getTrack();
 
-        if (p1.getCurPos() == track.getLength() || p2.getCurPos() == track.getLength()) {
-            game.setOver();
-        }
-
         game.incrementRound();
 
         p1.setDice((int) Math.floor(Math.random() * 3) + 1);
-        p2.setDice((int) Math.floor(Math.random() * 3) + 1);
+        int pos1 = p1.getCurPos() + p1.getDice();
         
-        p1.setPos(p1.getCurPos() + p1.getDice());
-        p2.setPos(p2.getCurPos() + p2.getDice());
+        if (pos1 < game.getTrack().getLength() && game.isOilField(pos1)) {
+            p1.setPos(0);
+        } else {
+            p1.setPos(Math.min(pos1, 6));
+            
+            if(p1.getCurPos() >= track.getLength() - 1) {
+                game.setLeader(1);
+                game.setOver();
+                p2.setDice(0);
+                return;
+            }
+        }
+        
+        p2.setDice((int) Math.floor(Math.random() * 3) + 1);
+        int pos2 = p2.getCurPos() + p2.getDice();
+        
+        if (pos2 < game.getTrack().getLength() && game.isOilField(pos2)) {
+            p2.setPos(0);
+        } else {
+            p2.setPos(Math.min(pos2, 6));
+            
+            if(p2.getCurPos() >= track.getLength() - 1) {
+                game.setLeader(2);
+                game.setOver();
+                return;
+            }
+        }
         
         if (p1.getCurPos() > p2.getCurPos()) {
             game.setLeader(1);

@@ -68,7 +68,7 @@ public class Game {
     }
     
     public boolean isOilField(int position) {
-        if (position < track.getLength() - 1) {
+        if (position < track.getLength()) {
             return track.getOil(position);
         }
         

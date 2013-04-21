@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="styles/screen.css" />
 
         <jsp:useBean id='game' class="model.Game" scope="session"/>
-        
+
         <script src="js/jquery.js" type="text/javascript"></script>
         <script type="text/javascript">
             //<![CDATA[
@@ -21,32 +21,34 @@
             function prepareAnimation() {
                 $("#animationDone").remove();
             }
-            
+
             $(document).ready(function() {
                 prepareAnimation();
-                
-                if(<%=game.getRound()%> > 0) {
-                    $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getOldPos()%>"));
-                    $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getOldPos()%>"));
-                    drawPlayer1NoOil();
+
+                if (<%= !game.isOver ()%>) {
+                    if (<%=game.getRound()%> > 0) {
+                        $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getOldPos()%>"));
+                        $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getOldPos()%>"));
+                        drawPlayer1NoOil();
+                    }
                 }
-                
+
                 completeAnimation();
                 return false;
             });
-            
-            
-            function drawPlayer1NoOil () {
-                    
+
+
+            function drawPlayer1NoOil() {
+
                 //Animation Player 1
                 $("#player1").fadeOut(700, function() {
                     $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getCurPos()%>"));
                     $("#player1").fadeIn(700, drawPlayer1Oil);
                 });
             }
-            
-            function drawPlayer1Oil () {
-                if(<%=game.isOilField(game.getP1().getCurPos())%>) {
+
+            function drawPlayer1Oil() {
+                if (<%=game.isOilField(game.getP1().getCurPos())%>) {
                     //Zurücksetzen auf den Start des Players 1
                     $("#player1").fadeOut(700, function() {
                         $("#player1").appendTo(document.getElementById("start_road"));
@@ -57,24 +59,24 @@
                     drawPlayer2NoOil();
                 }
             }
-            
-            function drawPlayer2NoOil () {
-                    
+
+            function drawPlayer2NoOil() {
+
                 //Animation Player 2
                 $("#player2").fadeOut(700, function() {
                     $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getCurPos()%>"));
                     $("#player2").fadeIn(700, drawPlayer2Oil);
                 });
             }
-            
-            function drawPlayer2Oil () {
-                if(<%=game.isOilField(game.getP2().getCurPos())%>) {
+
+            function drawPlayer2Oil() {
+                if (<%=game.isOilField(game.getP2().getCurPos())%>) {
                     //Zurücksetzen auf den Start des Players 2
                     $("#player2").fadeOut(700, function() {
                         $("#player2").appendTo(document.getElementById("start_road"));
                         $("#player2").fadeIn(700, completeAnimation);
                     });
-                    
+
                 } else {
                     completeAnimation;
                 }
@@ -110,11 +112,11 @@
                         <table summary="Diese Tabelle zeigt Informationen zum aktuellen Spiel">
                             <tr><th id="leaderLabel" class="label">F&uuml;hrender</th><td id="leader" class="data"><%=game.getLeader()%></td></tr>
                             <tr><th id="roundLabel" class="label">Runde</th><td id="round" class="data"><%=game.getRound()%></td></tr>
-                            <% Date date = new Date(game.getElapsedTime());
-                            DateFormat formatter = new SimpleDateFormat("mm:ss");
-                            String timeString = formatter.format(date); %>
+                                    <% Date date = new Date(game.getElapsedTime());
+                                DateFormat formatter = new SimpleDateFormat("mm:ss");
+                                String timeString = formatter.format(date);%>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP1().getDice()%> <%=game.getP1().getCurPos()%> <%=game.getP2().getDice()%> <%=game.getP2().getDice()%></td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP1().getDice()%> <%=game.getP1().getCurPos()%> <%=game.getP2().getDice()%> <%=game.getP2().getCurPos()%> GO: <%=game.isOver()%></td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">
@@ -139,14 +141,14 @@
                             </li>
                             <li class="oil_road" id="road_2">
                                 <span class="accessibility">Feld 3</span>
-                                
+
                             </li>
                             <li class="empty_road" id="road_3">
                                 <span class="accessibility">Feld 4</span>
                             </li>
                             <li class="empty_road" id="road_4">
                                 <span class="accessibility">Feld 5</span>
-                                
+
                             </li>
                             <li class="oil_road" id="road_5">
                                 <span class="accessibility">Feld 6</span>
