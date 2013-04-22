@@ -30,7 +30,7 @@
                     $("#player2").appendTo(document.getElementById("<%=game.getP2().getOPos()%>"));
                     drawPlayer1NoOil();
                 }
-
+                
                 completeAnimation();
                 return false;
             });
@@ -124,7 +124,7 @@
                                         DateFormat formatter = new SimpleDateFormat("mm:ss");
                                         String timeString = formatter.format(date);%>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP1().getOldPos()%> <%=game.getP1().getCurPos()%> <%=game.getP2().getDice()%> <%=game.getP2().getOldPos()%> <%=game.getP2().getCurPos()%></td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP2().getDice()%> <%=game.isOver()%></td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">

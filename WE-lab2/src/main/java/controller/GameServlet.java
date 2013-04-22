@@ -55,31 +55,30 @@ public class GameServlet extends HttpServlet {
         //Player 1
         p1.setDice((int) Math.floor(Math.random() * 3) + 1);
         int pos1 = p1.getCurPos() + p1.getDice();
-        
+
         p1.setPos(Math.min(pos1, track.getLength()-1));
-            
+
         if(p1.getCurPos() >= track.getLength() - 1) {
             game.setLeader(1);
-            game.setOver();
+            game.isOver();
             p2.setDice(0);
             p2.setPos(p2.getCurPos()+p2.getDice());
             return;
         }
-        
-        
-        
+
         //Player 2
         p2.setDice((int) Math.floor(Math.random() * 3) + 1);
         int pos2 = p2.getCurPos() + p2.getDice();
-        
+
         p2.setPos(Math.min(pos2, track.getLength()-1));
-            
+
         if(p2.getCurPos() >= track.getLength() - 1) {
             game.setLeader(2);
-            game.setOver();
+            game.isOver();
             return;
         }
-        
+
+        //Leaderanzeige
         if (p1.getCurPos() > p2.getCurPos()) {
             game.setLeader(1);
         } else if (p1.getCurPos() < p2.getCurPos()) {
@@ -87,5 +86,6 @@ public class GameServlet extends HttpServlet {
         } else {
             game.setLeader(0);
         }
+        
     }
 }
