@@ -58,9 +58,9 @@ public class GameServlet extends HttpServlet {
 
         p1.setPos(Math.min(pos1, track.getLength()-1));
 
-        if(p1.getCurPos() >= track.getLength() - 1) {
+        if(p1.getCurPos() == track.getLength() - 1) {
             game.setLeader(1);
-            game.isOver();
+            game.setOver();
             p2.setDice(0);
             p2.setPos(p2.getCurPos()+p2.getDice());
             return;
@@ -72,9 +72,9 @@ public class GameServlet extends HttpServlet {
 
         p2.setPos(Math.min(pos2, track.getLength()-1));
 
-        if(p2.getCurPos() >= track.getLength() - 1) {
+        if(p2.getCurPos() == track.getLength() - 1) {
             game.setLeader(2);
-            game.isOver();
+            game.setOver();
             return;
         }
 

@@ -28,10 +28,16 @@
                 if (<%=game.getRound()%> > 0) {
                     $("#player1").appendTo(document.getElementById("<%=game.getP1().getOPos()%>"));
                     $("#player2").appendTo(document.getElementById("<%=game.getP2().getOPos()%>"));
+                    
                     drawPlayer1NoOil();
                 }
                 
+               
+                    
+               
                 completeAnimation();
+                this.isOver();
+                
                 return false;
             });
 
@@ -47,7 +53,7 @@
             }
 
             function drawPlayer1Oil() {
-                if (<%=game.isOilField(game.getP1().getCurPos())%> == true) {
+                if (<%=game.isOilField(game.getP1().getCurPos())%>) {
                     //Zurücksetzen auf den Start des Players 1
                     
                     $("#player1").fadeOut(700, function() {
@@ -62,8 +68,6 @@
 
             function drawPlayer2NoOil() {
 
-                
-                
                 if(<%=game.getP2().getDice()%>!=0) {
                     //Animation Player 2
                     $("#player2").fadeOut(700, function() {
@@ -85,7 +89,7 @@
                     });
 
                 } else {
-                    completeAnimation;
+                    this.isOver();
                 }
             }
 
@@ -95,6 +99,14 @@
                 div.attr('id', 'animationDone');
                 div.addClass('hide');
                 $("body").append(div);
+            }
+            
+            function isOver() {
+                // GAME OVER screen anzeigen
+                if(<%=game.isOver()%> == true) {
+                    alert("GAME OVER!");
+                    window.location.href="GameServlet?restart=true";
+                }
             }
             //]]>
         </script>
@@ -124,7 +136,7 @@
                                         DateFormat formatter = new SimpleDateFormat("mm:ss");
                                         String timeString = formatter.format(date);%>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP2().getDice()%> <%=game.isOver()%></td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP2().getDice()%></td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">
@@ -170,7 +182,7 @@
                         <h2 class="accessibility">W&uuml;rfelbereich</h2>
                         <span class="accessibility">An der Reihe ist</span><div id="currentPlayerName">Super Mario</div>
                         <%
-                            String linkString ="";
+                            String linkString ="#";
                             if(game.isOver() == false) {
                                 linkString="GameServlet?dice=true";
                             }
