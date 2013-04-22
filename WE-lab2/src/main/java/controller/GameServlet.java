@@ -45,10 +45,8 @@ public class GameServlet extends HttpServlet {
         //Zum Start zurück setzten, wenn das letzte feld ein Ölfeld war
         if(track.getOil(Math.min(p1.getCurPos(),track.getLength()-1))) {
             p1.setPos(0);
-            p1.setPos(0);
         }
         if(track.getOil(Math.min(p2.getCurPos(),track.getLength()-1))) {
-            p2.setPos(0);
             p2.setPos(0);
         }
 

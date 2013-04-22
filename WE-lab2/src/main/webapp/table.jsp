@@ -32,11 +32,7 @@
                     drawPlayer1NoOil();
                 }
                 
-               
-                    
-               
                 completeAnimation();
-                this.isOver();
                 
                 return false;
             });
@@ -89,7 +85,7 @@
                     });
 
                 } else {
-                    this.isOver();
+                    completeAnimation();
                 }
             }
 
@@ -99,14 +95,6 @@
                 div.attr('id', 'animationDone');
                 div.addClass('hide');
                 $("body").append(div);
-            }
-            
-            function isOver() {
-                // GAME OVER screen anzeigen
-                if(<%=game.isOver()%> == true) {
-                    alert("GAME OVER!");
-                    window.location.href="GameServlet?restart=true";
-                }
             }
             //]]>
         </script>
@@ -188,7 +176,7 @@
                             }
                         %>
                         <a id="dice" href="<%=linkString%>" tabindex="4">
-                            <img id="diceImage" src="img/wuerfel<%=game.getP1().getDice()%>.png" alt="W&uuml;rfel mit einer Eins" />	
+                            <img id="diceImage" src="img/wuerfel<%=game.getP1().getDice()%>.png" alt="Würfel mit einer Eins" />	
                         </a>
                     </div>
                 </div>
