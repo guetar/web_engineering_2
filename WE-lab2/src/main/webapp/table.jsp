@@ -38,6 +38,7 @@
 
             function drawPlayer1NoOil() {
 
+                
                 //Animation Player 1
                 $("#player1").fadeOut(700, function() {
                     $("#player1").appendTo(document.getElementById("<%=game.getP1().getNPos()%>"));
@@ -61,11 +62,17 @@
 
             function drawPlayer2NoOil() {
 
-                //Animation Player 2
-                $("#player2").fadeOut(700, function() {
-                    $("#player2").appendTo(document.getElementById("<%=game.getP2().getNPos()%>"));
-                    $("#player2").fadeIn(700, drawPlayer2Oil);
-                });
+                
+                
+                if(<%=game.getP2().getDice()%>!=0) {
+                    //Animation Player 2
+                    $("#player2").fadeOut(700, function() {
+                        $("#player2").appendTo(document.getElementById("<%=game.getP2().getNPos()%>"));
+                        $("#player2").fadeIn(700, drawPlayer2Oil);
+                    });
+                } else {
+                    completeAnimation;
+                }
             }
 
             function drawPlayer2Oil() {
@@ -162,7 +169,13 @@
                     <div class="player">
                         <h2 class="accessibility">W&uuml;rfelbereich</h2>
                         <span class="accessibility">An der Reihe ist</span><div id="currentPlayerName">Super Mario</div>
-                        <a id="dice" href="GameServlet?dice=true" tabindex="4">
+                        <%
+                            String linkString ="";
+                            if(game.isOver() == false) {
+                                linkString="GameServlet?dice=true";
+                            }
+                        %>
+                        <a id="dice" href="<%=linkString%>" tabindex="4">
                             <img id="diceImage" src="img/wuerfel<%=game.getP1().getDice()%>.png" alt="W&uuml;rfel mit einer Eins" />	
                         </a>
                     </div>

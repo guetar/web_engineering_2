@@ -13,7 +13,7 @@ public class Game {
     public Game() {
         startTime = System.currentTimeMillis();
         track = new Track();
-        
+        gameOver=false;
         p1 = new Player("Super Mario", track);
         p2 = new Player("Super C", track);
     }
