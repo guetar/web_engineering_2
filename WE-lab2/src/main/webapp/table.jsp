@@ -26,8 +26,8 @@
                 prepareAnimation();
 
                 if (<%=game.getRound()%> > 0) {
-                    $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getOldPos()%>"));
-                    $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getOldPos()%>"));
+                    $("#player1").appendTo(document.getElementById("<%=game.getP1().getOPos()%>"));
+                    $("#player2").appendTo(document.getElementById("<%=game.getP2().getOPos()%>"));
                     drawPlayer1NoOil();
                 }
 
@@ -40,14 +40,15 @@
 
                 //Animation Player 1
                 $("#player1").fadeOut(700, function() {
-                    $("#player1").appendTo(document.getElementById("road_<%=game.getP1().getCurPos()%>"));
+                    $("#player1").appendTo(document.getElementById("<%=game.getP1().getNPos()%>"));
                     $("#player1").fadeIn(700, drawPlayer1Oil);
                 });
             }
 
             function drawPlayer1Oil() {
-                if (<%=game.isOilField(game.getP1().getCurPos())%>) {
+                if (<%=game.isOilField(game.getP1().getCurPos())%> == true) {
                     //Zurücksetzen auf den Start des Players 1
+                    
                     $("#player1").fadeOut(700, function() {
                         $("#player1").appendTo(document.getElementById("start_road"));
                         $("#player1").fadeIn(700, drawPlayer2NoOil);
@@ -62,7 +63,7 @@
 
                 //Animation Player 2
                 $("#player2").fadeOut(700, function() {
-                    $("#player2").appendTo(document.getElementById("road_<%=game.getP2().getCurPos()%>"));
+                    $("#player2").appendTo(document.getElementById("<%=game.getP2().getNPos()%>"));
                     $("#player2").fadeIn(700, drawPlayer2Oil);
                 });
             }
@@ -70,6 +71,7 @@
             function drawPlayer2Oil() {
                 if (<%=game.isOilField(game.getP2().getCurPos())%>) {
                     //Zurücksetzen auf den Start des Players 2
+                   
                     $("#player2").fadeOut(700, function() {
                         $("#player2").appendTo(document.getElementById("start_road"));
                         $("#player2").fadeIn(700, completeAnimation);
@@ -115,7 +117,7 @@
                                         DateFormat formatter = new SimpleDateFormat("mm:ss");
                                         String timeString = formatter.format(date);%>
                             <tr><th id="timeLabel" class="label">Zeit</th><td id="time" class="data"><%=timeString%></td></tr>
-                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP1().getDice()%> <%=game.getP1().getCurPos()%> <%=game.getP2().getDice()%> <%=game.getP2().getCurPos()%> GO: <%=game.isOver()%></td></tr>
+                            <tr><th id="computerScoreLabel" class="label">W&uuml;rfelergebnis <em>Super C</em></th><td id="computerScore" class="data"><%=game.getP1().getOldPos()%> <%=game.getP1().getCurPos()%> <%=game.getP2().getDice()%> <%=game.getP2().getOldPos()%> <%=game.getP2().getCurPos()%></td></tr>
                         </table>  
                         <h2>Spieler</h2>
                         <table summary="Diese Tabelle listet die Namen der Spieler auf">

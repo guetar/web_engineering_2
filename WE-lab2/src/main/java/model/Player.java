@@ -15,6 +15,9 @@ public class Player {
     public Player(String name, Track track) {
         this.name = name;
         this.track = track;
+        this.oldPos = 0;
+        this.curPos = 0;
+        this.dice = 0;
     }
     
     public void setName(String name) {
@@ -48,5 +51,13 @@ public class Player {
     
     public int getCurPos() {
         return curPos;
+    }
+    
+    public String getOPos() {
+        return track.getPosName(oldPos);
+    }
+    
+    public String getNPos() {
+        return track.getPosName(curPos);
     }
 }
